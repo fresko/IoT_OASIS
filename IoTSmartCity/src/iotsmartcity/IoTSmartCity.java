@@ -46,11 +46,12 @@ public class IoTSmartCity {
  
     public static void main(String[] args) throws Exception {
 
+      for(int i=0; i <= 650; i++){   
         IoTSmartCity iot = new IoTSmartCity();
 
         ////////////////////////CO2
         // The configuration is defined by the provisioning file.args[0]
-        DirectlyConnectedDevice dcd = new DirectlyConnectedDevice("CO2_Sensor", "Sc_dem00");
+       /* DirectlyConnectedDevice dcd = new DirectlyConnectedDevice("CO2_Air_Sensor", "Sc_dem00");
         // Activate the device if it not activated (so that you can run the code more than once!)
         if (!dcd.isActivated()) {
             dcd.activate(URN_CO2);
@@ -58,13 +59,11 @@ public class IoTSmartCity {
         // Set up a virtual device based on your device model
         DeviceModel dcdModel = dcd.getDeviceModel(URN_CO2);
         VirtualDevice virtualDevice = dcd.createVirtualDevice(dcd.getEndpointId(), dcdModel);
-        //for(int i=0; i <= 110; i++){
+       
         //Triggers a message to the Cloud Service.
         virtualDevice.set(GREETING_ATTRIBUTE_CO2, Double.parseDouble(iot.getJsonDevice(REST_URI_CO2).getValor()));
-        // Thread.sleep(4000);
-        // }
         dcd.close();
-
+        */
         /////////////////////////NOISE
         // The configuration is defined by the provisioning file.args[0]
         DirectlyConnectedDevice dcd2 = new DirectlyConnectedDevice("3", "Sc_dem00");
@@ -75,11 +74,9 @@ public class IoTSmartCity {
         // Set up a virtual device based on your device model
         DeviceModel dcdModel2 = dcd2.getDeviceModel(URN);
         VirtualDevice virtualDevice2 = dcd2.createVirtualDevice(dcd2.getEndpointId(), dcdModel2);
-        //for(int i=0; i <= 110; i++){
+       
         //Triggers a message to the Cloud Service.
         virtualDevice2.set(GREETING_ATTRIBUTE, Double.parseDouble(iot.getJsonDevice(REST_URI_NOISE).getValor()));
-        // Thread.sleep(4000);
-        // }
         dcd2.close();
         
         
@@ -93,13 +90,12 @@ public class IoTSmartCity {
         // Set up a virtual device based on your device model
         DeviceModel dcdModel3 = dcd3.getDeviceModel(URN_NO2);
         VirtualDevice virtualDevice3 = dcd3.createVirtualDevice(dcd3.getEndpointId(), dcdModel3);
-        //for(int i=0; i <= 110; i++){
+        
         //Triggers a message to the Cloud Service.
         virtualDevice3.set(GREETING_ATTRIBUTE_NO2, Double.parseDouble(iot.getJsonDevice(REST_URI_NO2).getValor()));
-        // Thread.sleep(4000);
-        // }
         dcd3.close();
-        
+        //Thread.sleep(3000);
+       }
 
     }
 
