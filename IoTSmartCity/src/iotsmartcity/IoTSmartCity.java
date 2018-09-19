@@ -33,7 +33,7 @@ public class IoTSmartCity {
     // The URN marked with number 2.
     private static final String URN = "urn:com:oracle:iot:device:noise_sensor";
     private static final String URN_CO2 = "urn:com:oracle:iot:device:co2_sensor";
-     private static final String URN_NO2 = "urn:com:oracle:iot:device:no2_sensor";
+    private static final String URN_PH = "urn:com:oracle:iot:device:pH_sensor";
 
 
     // The URN marked with number 2.
@@ -41,17 +41,17 @@ public class IoTSmartCity {
     // The attribute name marked with number 3.
     private static final String GREETING_ATTRIBUTE = "noise";
     private static final String GREETING_ATTRIBUTE_CO2 = "co2";
-    private static final String GREETING_ATTRIBUTE_NO2 = "no2";
+    private static final String GREETING_ATTRIBUTE_PH = "pH";
 
  
     public static void main(String[] args) throws Exception {
 
-      for(int i=0; i <= 650; i++){   
+      for(int i=0; i <= 5; i++){   
         IoTSmartCity iot = new IoTSmartCity();
 
         ////////////////////////CO2
         // The configuration is defined by the provisioning file.args[0]
-       /* DirectlyConnectedDevice dcd = new DirectlyConnectedDevice("CO2_Air_Sensor", "Sc_dem00");
+        DirectlyConnectedDevice dcd = new DirectlyConnectedDevice("co13", "Sc_dem00");
         // Activate the device if it not activated (so that you can run the code more than once!)
         if (!dcd.isActivated()) {
             dcd.activate(URN_CO2);
@@ -61,12 +61,12 @@ public class IoTSmartCity {
         VirtualDevice virtualDevice = dcd.createVirtualDevice(dcd.getEndpointId(), dcdModel);
        
         //Triggers a message to the Cloud Service.
-        virtualDevice.set(GREETING_ATTRIBUTE_CO2, Double.parseDouble(iot.getJsonDevice(REST_URI_CO2).getValor()));
+        virtualDevice.set(GREETING_ATTRIBUTE_CO2, Double.parseDouble(iot.getJsonDevice(REST_URI_CO2,i).getValor()));
         dcd.close();
-        */
+        
         /////////////////////////NOISE
         // The configuration is defined by the provisioning file.args[0]
-        DirectlyConnectedDevice dcd2 = new DirectlyConnectedDevice("3", "Sc_dem00");
+        DirectlyConnectedDevice dcd2 = new DirectlyConnectedDevice("noise11", "Sc_dem00");
         // Activate the device if it not activated (so that you can run the code more than once!)
         if (!dcd2.isActivated()) {
             dcd2.activate(URN);
@@ -76,34 +76,41 @@ public class IoTSmartCity {
         VirtualDevice virtualDevice2 = dcd2.createVirtualDevice(dcd2.getEndpointId(), dcdModel2);
        
         //Triggers a message to the Cloud Service.
-        virtualDevice2.set(GREETING_ATTRIBUTE, Double.parseDouble(iot.getJsonDevice(REST_URI_NOISE).getValor()));
+        virtualDevice2.set(GREETING_ATTRIBUTE, Double.parseDouble(iot.getJsonDevice(REST_URI_NOISE,i).getValor()));
         dcd2.close();
         
-        
-         ////////////////////////NO2
+       
+         ////////////////////////PH
         // The configuration is defined by the provisioning file.args[0]
-        DirectlyConnectedDevice dcd3 = new DirectlyConnectedDevice("NO2_Sensor", "Sc_dem00");
+       DirectlyConnectedDevice dcd3 = new DirectlyConnectedDevice("ph12", "Sc_dem00");
         // Activate the device if it not activated (so that you can run the code more than once!)
         if (!dcd3.isActivated()) {
-            dcd3.activate(URN_NO2);
+            dcd3.activate(URN_PH);
         }
         // Set up a virtual device based on your device model
-        DeviceModel dcdModel3 = dcd3.getDeviceModel(URN_NO2);
+        DeviceModel dcdModel3 = dcd3.getDeviceModel(URN_PH);
         VirtualDevice virtualDevice3 = dcd3.createVirtualDevice(dcd3.getEndpointId(), dcdModel3);
         
         //Triggers a message to the Cloud Service.
-        virtualDevice3.set(GREETING_ATTRIBUTE_NO2, Double.parseDouble(iot.getJsonDevice(REST_URI_NO2).getValor()));
+        virtualDevice3.set(GREETING_ATTRIBUTE_PH, Double.parseDouble(iot.getJsonDevice(REST_URI_NO2,i).getValor()));
         dcd3.close();
         //Thread.sleep(3000);
        }
-
+   
     }
 
-    public DeviceTest getJsonDevice(String REST_URI) {
+    /*public DeviceTest getJsonDevice(String REST_URI) {
         DeviceTest nd = client.target(REST_URI).path("").request(MediaType.APPLICATION_JSON).get(DeviceTest.class);
         return nd;
-    }
+    }*/
 
+    public DeviceTest getJsonDevice(String REST_URI,int var) {
+        DeviceTest nd = new DeviceTest ();
+        nd.setTiempo("10");
+        nd.setValor(""+var);
+        return nd;
+    }
+    
     public Response createJsonEmployee(DeviceTest emp) {
         return client
                 .target(REST_URI_NOISE)
